@@ -90,19 +90,22 @@ export default function Home() {
           color: inherit;
           height: 100%;
         }
-        .recipe-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(107, 112, 92, 0.08) !important; }
+        .recipe-card:hover { 
+          transform: translateY(-8px); 
+          box-shadow: 0 20px 40px rgba(107, 112, 92, 0.08) !important; 
+        }
         
         .recipe-image-container { 
           overflow: hidden; 
           position: relative; 
-          height: 280px; /* גובה קבוע לתמונה */
+          height: 280px; 
           width: 100%;
         }
         
         .recipe-image-container img {
           width: 100%;
           height: 100%;
-          object-fit: cover; /* שומר על יחס תמונה נכון */
+          object-fit: cover; 
           transition: transform 0.6s ease;
         }
 
@@ -127,6 +130,7 @@ export default function Home() {
         }
       `}</style>
 
+      {/* הדר דף הבית */}
       <header style={{ padding: '60px 20px 40px', textAlign: 'center' }}>
         <h1 style={{ fontSize: 'clamp(40px, 8vw, 72px)', fontWeight: '200', color: '#6B705C', margin: 0, letterSpacing: '6px' }}>
           Bake & Balance
@@ -137,6 +141,7 @@ export default function Home() {
         </p>
       </header>
 
+      {/* תפריט קטגוריות */}
       {!loading && categories.length > 1 && (
         <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginBottom: '60px', flexWrap: 'wrap', padding: '0 20px' }}>
           {categories.map(cat => (
@@ -151,7 +156,8 @@ export default function Home() {
         </div>
       )}
 
-      <section style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px 100px' }}>
+      {/* גריד מתכונים */}
+      <section style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px 60px' }}>
         {loading ? (
           <div style={{ textAlign: 'center', padding: '100px', color: '#8A8D84' }}>טוען מתכונים מתוקים...</div>
         ) : (
@@ -171,6 +177,7 @@ export default function Home() {
                       {recipe.title}
                     </h3>
 
+                    {/* דירוג כוכבים */}
                     {recipe.averageRating && (
                       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px', marginBottom: '15px', color: '#FFB100', fontSize: '16px' }}>
                         <span>{'★'.repeat(Math.round(recipe.averageRating))}</span>
@@ -195,6 +202,31 @@ export default function Home() {
           </div>
         )}
       </section>
+
+      {/* פוטר תחתון עם קישור למדיניות פרטיות */}
+      <footer style={{ 
+        textAlign: 'center', 
+        padding: '40px 20px', 
+        borderTop: '1px solid #F1EDE8',
+        marginTop: '20px'
+      }}>
+        <div style={{ marginBottom: '10px' }}>
+          <a 
+            href="/privacy" 
+            style={{ 
+              color: '#8A8D84', 
+              fontSize: '13px', 
+              textDecoration: 'none',
+              fontWeight: '400'
+            }}
+          >
+            מדיניות פרטיות
+          </a>
+        </div>
+        <div style={{ color: '#C2C0BA', fontSize: '11px', fontStyle: 'italic' }}>
+          Bake & Balance 2026 © | כל הזכויות שמורות לשירה נוסבוים
+        </div>
+      </footer>
     </main>
   );
 }
