@@ -77,9 +77,9 @@ export default function Home() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600&display=swap');
         
-        .recipe-card { transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .recipe-card { transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); border: 1px solid #F1EDE8; background: white; border-radius: 32px; overflow: hidden; display: flex; flexDirection: column; boxShadow: 0 10px 30px rgba(0,0,0,0.02); text-decoration: none; color: inherit; }
         .recipe-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(107, 112, 92, 0.08) !important; }
-        .recipe-image-container { overflow: hidden; position: relative; }
+        .recipe-image-container { overflow: hidden; position: relative; height: 320px; }
         .recipe-card:hover img { transform: scale(1.05); }
         
         .category-btn {
@@ -101,7 +101,6 @@ export default function Home() {
         }
       `}</style>
 
-      {/* הדר מרכזי - מרווח מלמעלה כדי לא להתנגש ב-Navbar הגלובלי */}
       <header style={{ padding: '60px 20px 40px', textAlign: 'center' }}>
         <h1 style={{ fontSize: 'clamp(40px, 8vw, 72px)', fontWeight: '200', color: '#6B705C', margin: 0, letterSpacing: '6px' }}>
           Bake & Balance
@@ -133,52 +132,29 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '40px' }}>
             {filteredRecipes.length > 0 ? (
               filteredRecipes.map((recipe: any) => (
-                <a 
-                  href={`/recipe/${recipe.slug}`} 
-                  key={recipe.slug} 
-                  className="recipe-card"
-                  style={{ 
-                    textDecoration: 'none', 
-                    color: 'inherit', 
-                    backgroundColor: 'white', 
-                    borderRadius: '32px', 
-                    overflow: 'hidden', 
-                    display: 'flex',
-                    flexDirection: 'column',
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.02)',
-                    border: '1px solid #F1EDE8'
-                  }}
-                >
-                  <div className="recipe-image-container" style={{ height: '320px' }}>
+                <a href={`/recipe/${recipe.slug}`} key={recipe.slug} className="recipe-card">
+                  <div className="recipe-image-container">
                     <img 
                       src={recipe.imageUrl} 
                       alt={recipe.title}
                       style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s ease' }} 
                     />
-                    <div style={{ 
-                      position: 'absolute', top: '20px', right: '20px', 
-                      display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end'
-                    }}>
-                      {recipe.categories?.map((cat: string) => (
-                        <div key={cat} style={{ 
-                          backgroundColor: 'rgba(255,255,255,0.9)', padding: '4px 10px', 
-                          borderRadius: '20px', fontSize: '10px', color: '#6B705C', fontWeight: '700',
-                          backdropFilter: 'blur(4px)', boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
-                        }}>
-                          {cat}
-                        </div>
-                      ))}
-                    </div>
                   </div>
 
                   <div style={{ padding: '35px 30px', textAlign: 'center' }}>
                     <h3 style={{ fontSize: '28px', margin: '0 0 10px 0', color: '#434641', fontWeight: '400' }}>
                       {recipe.title}
                     </h3>
-                    <p style={{ 
-                      fontSize: '16px', color: '#8A8D84', lineHeight: '1.6', height: '50px',
-                      overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'
-                    }}>
+
+                    {/* החזרת הכוכבים לפי בקשת אמא */}
+                    {recipe.averageRating && (
+                      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px', marginBottom: '15px', color: '#FFB100', fontSize: '16px' }}>
+                        <span>{'★'.repeat(Math.round(recipe.averageRating))}</span>
+                        <span style={{ color: '#8A8D84', fontSize: '12px', fontWeight: '400' }}>({recipe.averageRating})</span>
+                      </div>
+                    )}
+
+                    <p style={{ fontSize: '16px', color: '#8A8D84', lineHeight: '1.6', height: '50px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                       {recipe.description}
                     </p>
                     <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #F8F5F2', color: '#6B705C', fontSize: '14px', fontWeight: '600' }}>
