@@ -8,7 +8,7 @@ export default function Navbar() {
         
         {/* לוגו - פונט קצת יותר גדול ודומיננטי */}
         <Link href="/" className="text-2xl font-light tracking-tighter text-[#5C5F58] hover:opacity-80 transition-opacity">
-          שירה <span className="font-bold text-[#6B705C]">&</span> BALANCE
+          BAKE <span className="font-bold text-[#6B705C]">&</span> BALANCE
         </Link>
 
         {/* קישורי הניווט - הגדלתי פונט (text-lg) והוספתי ריווח (gap-10) */}
