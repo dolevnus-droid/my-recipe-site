@@ -3,14 +3,6 @@ import Link from 'next/link';
 export default function AboutPage() {
   return (
     <main className="max-w-4xl mx-auto px-6 py-12 text-right" dir="rtl">
-      
-      {/* כפתור חזרה קטן ועדין */}
-      <div className="mb-12">
-        <Link href="/" className="text-sm text-gray-400 hover:text-amber-600 transition-colors flex items-center gap-1 group">
-          <span className="group-hover:-translate-x-1 transition-transform">→</span>
-          <span className="border-b border-transparent hover:border-amber-600">חזרה למתכונים</span>
-        </Link>
-      </div>
 
       <h1 className="text-4xl font-bold mb-10 text-center text-gray-800">קצת עלי</h1>
 

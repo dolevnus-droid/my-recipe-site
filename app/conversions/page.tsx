@@ -42,30 +42,42 @@ const conversions = [
 
 export default function ConversionsPage() {
   return (
-    <main style={{ direction: 'rtl', backgroundColor: '#FDFCFB', minHeight: '100vh', padding: '60px 20px', color: '#434641' }}>
+    <main style={{ direction: 'rtl', backgroundColor: '#FDFCFB', minHeight: '100vh', padding: '40px 20px 100px', color: '#434641' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600&display=swap');
-        body { font-family: 'Assistant', sans-serif; }
         .conversion-card { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); border: 1px solid #F1EDE8; margin-bottom: 30px; }
         .conversion-table { width: 100%; border-collapse: collapse; }
         .conversion-table th { text-align: right; color: #6B705C; padding: 12px; border-bottom: 2px solid #F9F7F4; font-weight: 600; }
         .conversion-table td { padding: 12px; border-bottom: 1px solid #F9F7F4; color: #8A8D84; }
-        .back-link { display: inline-block; margin-bottom: 40px; color: #6B705C; text-decoration: none; font-weight: 600; transition: 0.3s; }
-        .back-link:hover { transform: translateX(5px); }
+        .important-note { 
+          background-color: #F8F5F2; 
+          border-right: 4px solid #A4AC86; 
+          padding: 15px 25px; 
+          border-radius: 8px; 
+          display: inline-block;
+          margin-bottom: 40px;
+          color: #6B705C;
+          font-weight: 400;
+        }
       `}</style>
-
-      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <a href="/" className="back-link">← חזרה למתכונים</a>
         
-        <header style={{ textAlign: 'center', marginBottom: '60px' }}>
-          <h1 style={{ fontSize: '42px', fontWeight: '200', color: '#6B705C', margin: 0 }}>המרת מידות באפייה</h1>
-          <p style={{ color: '#8A8D84', marginTop: '10px' }}>המדריך המלא למעבר בין כוסות לגרמים</p>
+        <header style={{ textAlign: 'center', marginBottom: '20px', paddingTop: '20px' }}>
+          <h1 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '200', color: '#6B705C', margin: '0 0 15px 0' }}>
+            כמה זה בגרמים?
+          </h1>
+          <p style={{ fontSize: '20px', color: '#8A8D84', maxWidth: '600px', margin: '0 auto 30px' }}>
+            המדריך המלא להמרת כוסות, כפות וכפיות למשקל מדויק
+          </p>
+          
+          {/* ההערה החשובה הועברה להתחלה בעיצוב בולט */}
+          <div className="important-note">
+            💡 <strong>חשוב לדעת:</strong> כל המידות בדף זה (ובאתר בכלל) מתייחסות ל<strong>כוס מדידה בינלאומית סטנדרטית של 240 מ"ל</strong>.
+          </div>
         </header>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '30px' }}>
           {conversions.map((section, idx) => (
             <div key={idx} className="conversion-card">
-              <h3 style={{ color: '#6B705C', marginBottom: '20px', borderRight: '3px solid #A4AC86', paddingRight: '15px' }}>
+              <h3 style={{ color: '#6B705C', marginBottom: '20px', borderRight: '3px solid #A4AC86', paddingRight: '15px', fontSize: '22px' }}>
                 {section.category}
               </h3>
               <table className="conversion-table">
@@ -81,7 +93,7 @@ export default function ConversionsPage() {
                     <tr key={i}>
                       <td>{item.name}</td>
                       <td>{item.cup}</td>
-                      <td style={{ fontWeight: '600' }}>{item.grams}</td>
+                      <td style={{ fontWeight: '600', color: '#5C5F58' }}>{item.grams}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -89,11 +101,6 @@ export default function ConversionsPage() {
             </div>
           ))}
         </div>
-
-        <footer style={{ marginTop: '60px', textAlign: 'center', color: '#A4AC86', fontSize: '14px' }}>
-          <p>המידות מתייחסות לכוס מדידה בינלאומית סטנדרטית (240 מ"ל)</p>
-        </footer>
-      </div>
     </main>
   );
 }

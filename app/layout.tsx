@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Assistant } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
+import Navbar from "./components/Navbar"; // ייבוא הקומפוננטה החדשה
 
 const assistant = Assistant({
   subsets: ["hebrew", "latin"],
@@ -35,7 +36,10 @@ export default function RootLayout({
         />
       </head>
       <body className={`${assistant.className} antialiased`}>
-        {/* ללא Header גלובלי - משתמשים בתפריט שקיים כבר בעמודים */}
+        
+        {/* עכשיו ה-Navbar מופיע בכל דפי האתר באופן קבוע */}
+        <Navbar />
+
         <main>
           {children}
         </main>

@@ -105,20 +105,6 @@ export default function RecipePage({ params }: { params: any }) {
 
   return (
     <main style={{ direction: 'rtl', backgroundColor: '#FDFCFB', minHeight: '100vh', color: '#434641', paddingBottom: '100px' }}>
-      
-      {/* תפריט ניווט עליון */}
-      <nav className="no-print" style={{ 
-        padding: '25px 20px', 
-        display: 'flex', 
-        justifyContent: 'center', 
-        gap: '30px', 
-        borderBottom: '1px solid rgba(0,0,0,0.03)',
-        backgroundColor: '#FDFCFB'
-      }}>
-        <a href="/" style={{ textDecoration: 'none', color: '#6B705C', fontWeight: '600' }}>מתכונים</a>
-        <a href="/conversions" style={{ textDecoration: 'none', color: '#8A8D84' }}>המרת מידות</a>
-        <a href="/about" style={{ textDecoration: 'none', color: '#8A8D84' }}>קצת עלי</a>
-      </nav>
 
       <div className="no-print" style={{ width: '100%', height: '60vh', position: 'relative', overflow: 'hidden' }}>
         <img 
