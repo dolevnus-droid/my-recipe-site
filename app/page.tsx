@@ -77,9 +77,35 @@ export default function Home() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600&display=swap');
         
-        .recipe-card { transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); border: 1px solid #F1EDE8; background: white; border-radius: 32px; overflow: hidden; display: flex; flexDirection: column; boxShadow: 0 10px 30px rgba(0,0,0,0.02); text-decoration: none; color: inherit; }
+        .recipe-card { 
+          transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+          border: 1px solid #F1EDE8; 
+          background: white; 
+          border-radius: 32px; 
+          overflow: hidden; 
+          display: flex; 
+          flex-direction: column; 
+          box-shadow: 0 10px 30px rgba(0,0,0,0.02); 
+          text-decoration: none; 
+          color: inherit;
+          height: 100%;
+        }
         .recipe-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(107, 112, 92, 0.08) !important; }
-        .recipe-image-container { overflow: hidden; position: relative; height: 320px; }
+        
+        .recipe-image-container { 
+          overflow: hidden; 
+          position: relative; 
+          height: 280px; /* גובה קבוע לתמונה */
+          width: 100%;
+        }
+        
+        .recipe-image-container img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; /* שומר על יחס תמונה נכון */
+          transition: transform 0.6s ease;
+        }
+
         .recipe-card:hover img { transform: scale(1.05); }
         
         .category-btn {
@@ -129,7 +155,7 @@ export default function Home() {
         {loading ? (
           <div style={{ textAlign: 'center', padding: '100px', color: '#8A8D84' }}>טוען מתכונים מתוקים...</div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '40px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '40px' }}>
             {filteredRecipes.length > 0 ? (
               filteredRecipes.map((recipe: any) => (
                 <a href={`/recipe/${recipe.slug}`} key={recipe.slug} className="recipe-card">
@@ -137,7 +163,6 @@ export default function Home() {
                     <img 
                       src={recipe.imageUrl} 
                       alt={recipe.title}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s ease' }} 
                     />
                   </div>
 
@@ -146,7 +171,6 @@ export default function Home() {
                       {recipe.title}
                     </h3>
 
-                    {/* החזרת הכוכבים לפי בקשת אמא */}
                     {recipe.averageRating && (
                       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px', marginBottom: '15px', color: '#FFB100', fontSize: '16px' }}>
                         <span>{'★'.repeat(Math.round(recipe.averageRating))}</span>
