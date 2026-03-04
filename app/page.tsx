@@ -13,7 +13,6 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // שאילתה לשליפת המתכונים יחד עם מערך הקטגוריות והדירוגים
         const query = `*[_type == "recipe" && defined(slug.current)]{
           _id,
           title,
@@ -40,7 +39,6 @@ export default function Home() {
         setRecipes(processedData);
         setFilteredRecipes(processedData);
         
-        // יצירת רשימת קטגוריות ייחודית מתוך המערכים של כל המתכונים
         const allCategories = processedData.reduce((acc: string[], recipe: any) => {
           if (recipe.categories && Array.isArray(recipe.categories)) {
             return [...acc, ...recipe.categories];
@@ -99,24 +97,23 @@ export default function Home() {
           color: white;
           border-color: #6B705C;
           box-shadow: 0 4px 12px rgba(107, 112, 92, 0.15);
+          font-weight: 700;
         }
-
-        .nav-link { text-decoration: none; color: #8A8D84; font-size: 14px; transition: 0.3s; }
-        .nav-link:hover { color: #6B705C; }
       `}</style>
 
-      <header style={{ padding: '80px 20px 40px', textAlign: 'center' }}>
-        <h1 style={{ fontSize: 'clamp(40px, 8vw, 64px)', fontWeight: '200', color: '#6B705C', margin: 0, letterSpacing: '6px' }}>
+      {/* הדר מרכזי - מרווח מלמעלה כדי לא להתנגש ב-Navbar הגלובלי */}
+      <header style={{ padding: '60px 20px 40px', textAlign: 'center' }}>
+        <h1 style={{ fontSize: 'clamp(40px, 8vw, 72px)', fontWeight: '200', color: '#6B705C', margin: 0, letterSpacing: '6px' }}>
           Bake & Balance
         </h1>
         <div style={{ width: '40px', height: '2px', backgroundColor: '#A4AC86', margin: '24px auto', opacity: 0.6 }}></div>
-        <p style={{ fontSize: '24px', color: '#8A8D84', fontWeight: '300' }}>
+        <p style={{ fontSize: '22px', color: '#8A8D84', fontWeight: '300' }}>
           אפייה ביתית באיזון מושלם
         </p>
       </header>
 
       {!loading && categories.length > 1 && (
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '50px', flexWrap: 'wrap', padding: '0 20px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginBottom: '60px', flexWrap: 'wrap', padding: '0 20px' }}>
           {categories.map(cat => (
             <button
               key={cat}
@@ -129,7 +126,7 @@ export default function Home() {
         </div>
       )}
 
-      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 30px 100px' }}>
+      <section style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px 100px' }}>
         {loading ? (
           <div style={{ textAlign: 'center', padding: '100px', color: '#8A8D84' }}>טוען מתכונים מתוקים...</div>
         ) : (
@@ -178,24 +175,6 @@ export default function Home() {
                     <h3 style={{ fontSize: '28px', margin: '0 0 10px 0', color: '#434641', fontWeight: '400' }}>
                       {recipe.title}
                     </h3>
-
-                    {recipe.averageRating && (
-                      <div style={{ 
-                        display: 'flex', 
-                        justifyContent: 'center', 
-                        alignItems: 'center', 
-                        gap: '5px', 
-                        marginBottom: '15px', 
-                        color: '#FFB100', 
-                        fontSize: '16px' 
-                      }}>
-                        <span>{'★'.repeat(Math.round(recipe.averageRating))}</span>
-                        <span style={{ color: '#8A8D84', fontSize: '12px', fontWeight: '400' }}>
-                          ({recipe.averageRating})
-                        </span>
-                      </div>
-                    )}
-
                     <p style={{ 
                       fontSize: '16px', color: '#8A8D84', lineHeight: '1.6', height: '50px',
                       overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'
@@ -216,20 +195,6 @@ export default function Home() {
           </div>
         )}
       </section>
-
-      <footer style={{ 
-        textAlign: 'center', 
-        padding: '80px 20px', 
-        borderTop: '1px solid #F1EDE8',
-        color: '#A4AC86',
-        fontSize: '13px',
-        letterSpacing: '2px'
-      }}>
-        <p>© {new Date().getFullYear()} BAKE & BALANCE </p>
-        <div style={{ marginTop: '15px' }}>
-          <a href="/privacy" style={{ color: '#A4AC86', textDecoration: 'none', fontSize: '11px', borderBottom: '1px solid #EAE7E2', paddingBottom: '2px' }}>מדיניות פרטיות</a>
-        </div>
-      </footer>
     </main>
   );
 }
