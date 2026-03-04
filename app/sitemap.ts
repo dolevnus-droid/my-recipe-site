@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { client } from '@/sanity/lib/client';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://bake-and-balance.com';
+  const baseUrl = 'https://www.bake-and-balance.com';
 
   // שליפת כל ה-Slugs של המתכונים מ-Sanity
   const recipes = await client.fetch(`*[_type == "recipe" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`);
@@ -22,10 +22,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
+      url: `${baseUrl}/conversions`, // הוספנו את דף ההמרות
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/about`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.5,
+      priority: 0.6,
     },
     ...recipeUrls,
   ];
