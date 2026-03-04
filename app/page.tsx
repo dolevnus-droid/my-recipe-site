@@ -105,13 +105,6 @@ export default function Home() {
         .nav-link:hover { color: #6B705C; }
       `}</style>
 
-      {/* תפריט ניווט מעודכן */}
-      <nav style={{ padding: '25px 20px', display: 'flex', justifyContent: 'center', gap: '30px', borderBottom: '1px solid rgba(0,0,0,0.03)', flexWrap: 'wrap' }}>
-        <a href="/" style={{ color: '#6B705C', fontWeight: '600', textDecoration: 'none' }}>מתכונים</a>
-        <a href="/conversions" className="nav-link">המרת מידות</a>
-        <a href="/about" className="nav-link">קצת עלי</a>
-      </nav>
-
       <header style={{ padding: '80px 20px 40px', textAlign: 'center' }}>
         <h1 style={{ fontSize: 'clamp(40px, 8vw, 64px)', fontWeight: '200', color: '#6B705C', margin: 0, letterSpacing: '6px' }}>
           Bake & Balance
