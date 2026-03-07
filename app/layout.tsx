@@ -10,12 +10,24 @@ const assistant = Assistant({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.bake-and-balance.com'),
+  alternates: {
+    canonical: '/',
+  },
   title: {
     default: "Bake & Balance | אפייה ביתית באיזון מושלם",
     template: "%s | Bake & Balance"
   },
   description: "Bake & Balance - הבלוג של שירה למתכונים לאפייה ביתית מדויקת, מאוזנת ומלאה באהבה.",
   keywords: ["Bake & Balance", "בייק אנד באלאנס", "מתכונים לאפייה", "אפייה ביתית", "עוגות מאוזנות"],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
 
 export default function RootLayout({
