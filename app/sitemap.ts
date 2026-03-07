@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const recipeUrls = recipes.map((recipe: any) => ({
     url: `${baseUrl}/recipe/${recipe.slug}`,
     lastModified: new Date(recipe._updatedAt),
-    changeFrequency: 'weekly',
+    changeFrequency: 'weekly' as const, // הוספת as const מבטיחה שהטייפ יהיה מדויק
     priority: 0.8,
   }));
 
@@ -18,25 +18,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 1,
     },
     {
-      url: `${baseUrl}/conversions`, // הוספנו את דף ההמרות
+      url: `${baseUrl}/conversions`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.7,
     },
     {
       url: `${baseUrl}/about`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.6,
     },
     {
-      url: `${baseUrl}/privacy`, // הוספנו את דף הפרטיות
+      url: `${baseUrl}/privacy`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.3,
     },
     ...recipeUrls,

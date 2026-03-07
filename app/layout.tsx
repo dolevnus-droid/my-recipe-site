@@ -10,7 +10,9 @@ const assistant = Assistant({
 });
 
 export const metadata: Metadata = {
+  // הוספת בסיס הכתובת כדי שגוגל יזהה את האתר כמאובטח
   metadataBase: new URL('https://www.bake-and-balance.com'),
+  // הגדרת הכתובת הקנונית למניעת כפילויות ובעיות אינדוקס
   alternates: {
     canonical: '/',
   },
@@ -20,6 +22,7 @@ export const metadata: Metadata = {
   },
   description: "Bake & Balance - הבלוג של שירה למתכונים לאפייה ביתית מדויקת, מאוזנת ומלאה באהבה.",
   keywords: ["Bake & Balance", "בייק אנד באלאנס", "מתכונים לאפייה", "אפייה ביתית", "עוגות מאוזנות"],
+  // מתן אישור מפורש לרובוטים של גוגל לסרוק את האתר
   robots: {
     index: true,
     follow: true,

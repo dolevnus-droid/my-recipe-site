@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# קישור למפת האתר שיצרנו
+Sitemap: https://www.bake-and-balance.com/sitemap.xml
+
+# חסימת סריקה של תיקיות מערכת או דפים פרטיים (אופציונלי)
+Disallow: /api/
