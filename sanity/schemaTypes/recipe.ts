@@ -1,4 +1,7 @@
-export default {
+import { defineType } from 'sanity';
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default defineType({
   name: 'recipe',
   title: 'מתכון',
   type: 'document',
@@ -68,6 +71,11 @@ export default {
       of: [{ type: 'string' }],
     },
     {
+      name: 'isFeatured',
+      title: 'מתכון נבחר (יופיע ראשון)',
+      type: 'boolean',
+    },
+    {
       name: 'instructions',
       title: 'הוראות הכנה',
       type: 'text',
@@ -82,4 +90,4 @@ export default {
       validation: (Rule: any) => Rule.max(160).warning('תיאור ארוך מדי עלול להיחתך בגוגל'),
     },
   ],
-}
+});
