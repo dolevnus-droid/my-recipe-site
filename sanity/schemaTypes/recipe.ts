@@ -1,6 +1,5 @@
 import { defineType } from 'sanity';
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default defineType({
   name: 'recipe',
   title: 'מתכון',
@@ -10,6 +9,7 @@ export default defineType({
       name: 'title',
       title: 'כותרת המתכון',
       type: 'string',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       validation: (Rule: any) => Rule.required(),
     },
     {
@@ -17,6 +17,7 @@ export default defineType({
       title: 'מזהה כתובת (URL)',
       type: 'slug',
       options: { source: 'title', maxLength: 96 },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       validation: (Rule: any) => Rule.required(),
     },
     {
@@ -87,6 +88,7 @@ export default defineType({
       type: 'text',
       rows: 2,
       description: 'זה התיאור שיופיע בתוצאות החיפוש בגוגל. מומלץ לכתוב משהו מושך עד 160 תווים.',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       validation: (Rule: any) => Rule.max(160).warning('תיאור ארוך מדי עלול להיחתך בגוגל'),
     },
   ],
