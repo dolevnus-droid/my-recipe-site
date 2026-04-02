@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // עדכון ה-Query: מושכים את isFeatured ומסדרים לפיו קודם
+        // שאילתה שמושכת את כל הנתונים הרלוונטיים כולל הסטטוס "נבחר"
         const query = `*[_type == "recipe" && defined(slug.current)] | order(isFeatured desc, _createdAt desc){
           _id,
           title,
@@ -22,6 +22,7 @@ export default function Home() {
           description,
           categories,
           isFeatured,
+          _createdAt,
           "ratings": *[_type == "comment" && recipe._ref == ^._id && approved == true].rating
         }`;
         
@@ -38,10 +39,17 @@ export default function Home() {
           };
         });
 
-        setRecipes(processedData);
-        setFilteredRecipes(processedData);
+        // לוגיקת המיון: מוודא ש-isFeatured תמיד במקום הראשון במערך
+        const sortedData = [...processedData].sort((a, b) => {
+          if (a.isFeatured && !b.isFeatured) return -1;
+          if (!a.isFeatured && b.isFeatured) return 1;
+          return new Date(b._createdAt).getTime() - new Date(a._createdAt).getTime();
+        });
+
+        setRecipes(sortedData);
+        setFilteredRecipes(sortedData);
         
-        const allCategories = processedData.reduce((acc: string[], recipe: any) => {
+        const allCategories = sortedData.reduce((acc: string[], recipe: any) => {
           if (recipe.categories && Array.isArray(recipe.categories)) {
             return [...acc, ...recipe.categories];
           }
@@ -64,6 +72,7 @@ export default function Home() {
     if (cat === 'הכל') {
       setFilteredRecipes(recipes);
     } else {
+      // הסינון מתבצע על המערך הקיים שכבר ממוין
       setFilteredRecipes(recipes.filter(r => r.categories?.includes(cat)));
     }
   };
@@ -98,7 +107,7 @@ export default function Home() {
           box-shadow: 0 20px 40px rgba(107, 112, 92, 0.08) !important; 
         }
 
-        /* עיצוב למתכון נבחר */
+        /* עיצוב למתכון נבחר - Featured */
         .featured-card {
            border: 1px solid #A4AC86;
            box-shadow: 0 15px 35px rgba(164, 172, 134, 0.1);
@@ -153,7 +162,7 @@ export default function Home() {
         }
       `}</style>
 
-      {/* הדר דף הבית */}
+      {/* הדר */}
       <header style={{ padding: '60px 20px 40px', textAlign: 'center' }}>
         <h1 style={{ fontSize: 'clamp(40px, 8vw, 72px)', fontWeight: '200', color: '#6B705C', margin: 0, letterSpacing: '6px' }}>
           Bake & Balance
@@ -164,7 +173,7 @@ export default function Home() {
         </p>
       </header>
 
-      {/* תפריט קטגוריות */}
+      {/* קטגוריות */}
       {!loading && categories.length > 1 && (
         <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginBottom: '60px', flexWrap: 'wrap', padding: '0 20px' }}>
           {categories.map(cat => (
@@ -179,7 +188,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* גריד מתכונים */}
+      {/* גריד המתכונים */}
       <section style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px 60px' }}>
         {loading ? (
           <div style={{ textAlign: 'center', padding: '100px', color: '#8A8D84' }}>טוען מתכונים מתוקים...</div>
@@ -192,7 +201,7 @@ export default function Home() {
                   key={recipe.slug} 
                   className={`recipe-card ${recipe.isFeatured ? 'featured-card' : ''}`}
                 >
-                  {/* תגית למתכון נבחר */}
+                  {/* הצגת תגית רק אם המתכון מסומן כנבחר */}
                   {recipe.isFeatured && <div className="featured-badge">מומלץ לפסח ✨</div>}
 
                   <div className="recipe-image-container">
@@ -207,7 +216,6 @@ export default function Home() {
                       {recipe.title}
                     </h3>
 
-                    {/* דירוג כוכבים */}
                     {recipe.averageRating && (
                       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px', marginBottom: '15px', color: '#FFB100', fontSize: '16px' }}>
                         <span>{'★'.repeat(Math.round(recipe.averageRating))}</span>
@@ -226,14 +234,13 @@ export default function Home() {
               ))
             ) : (
               <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '100px', color: '#8A8D84' }}>
-                <p>לא נמצאו מתכונים בקטגוריה זו.</p>
+                לא נמצאו מתכונים.
               </div>
             )}
           </div>
         )}
       </section>
 
-      {/* פוטר */}
       <footer style={{ 
         textAlign: 'center', 
         padding: '40px 20px', 
@@ -241,17 +248,7 @@ export default function Home() {
         marginTop: '20px'
       }}>
         <div style={{ marginBottom: '10px' }}>
-          <a 
-            href="/privacy" 
-            style={{ 
-              color: '#8A8D84', 
-              fontSize: '13px', 
-              textDecoration: 'none',
-              fontWeight: '400'
-            }}
-          >
-            מדיניות פרטיות
-          </a>
+          <a href="/privacy" style={{ color: '#8A8D84', fontSize: '13px', textDecoration: 'none' }}>מדיניות פרטיות</a>
         </div>
         <div style={{ color: '#C2C0BA', fontSize: '11px', fontStyle: 'italic' }}>
           Bake & Balance 2026 © | כל הזכויות שמורות לשירה נוסבוים
