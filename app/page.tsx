@@ -13,13 +13,15 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const query = `*[_type == "recipe" && defined(slug.current)]{
+        // עדכון ה-Query: מושכים את isFeatured ומסדרים לפיו קודם
+        const query = `*[_type == "recipe" && defined(slug.current)] | order(isFeatured desc, _createdAt desc){
           _id,
           title,
           "slug": slug.current,
           "imageUrl": mainImage.asset->url,
           description,
           categories,
+          isFeatured,
           "ratings": *[_type == "comment" && recipe._ref == ^._id && approved == true].rating
         }`;
         
@@ -89,10 +91,31 @@ export default function Home() {
           text-decoration: none; 
           color: inherit;
           height: 100%;
+          position: relative;
         }
         .recipe-card:hover { 
           transform: translateY(-8px); 
           box-shadow: 0 20px 40px rgba(107, 112, 92, 0.08) !important; 
+        }
+
+        /* עיצוב למתכון נבחר */
+        .featured-card {
+           border: 1px solid #A4AC86;
+           box-shadow: 0 15px 35px rgba(164, 172, 134, 0.1);
+        }
+
+        .featured-badge {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          background: #6B705C;
+          color: white;
+          padding: 6px 16px;
+          border-radius: 50px;
+          font-size: 13px;
+          font-weight: 600;
+          z-index: 10;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         
         .recipe-image-container { 
@@ -164,7 +187,14 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '40px' }}>
             {filteredRecipes.length > 0 ? (
               filteredRecipes.map((recipe: any) => (
-                <a href={`/recipe/${recipe.slug}`} key={recipe.slug} className="recipe-card">
+                <a 
+                  href={`/recipe/${recipe.slug}`} 
+                  key={recipe.slug} 
+                  className={`recipe-card ${recipe.isFeatured ? 'featured-card' : ''}`}
+                >
+                  {/* תגית למתכון נבחר */}
+                  {recipe.isFeatured && <div className="featured-badge">מומלץ לפסח ✨</div>}
+
                   <div className="recipe-image-container">
                     <img 
                       src={recipe.imageUrl} 
@@ -203,7 +233,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* פוטר תחתון עם קישור למדיניות פרטיות */}
+      {/* פוטר */}
       <footer style={{ 
         textAlign: 'center', 
         padding: '40px 20px', 
